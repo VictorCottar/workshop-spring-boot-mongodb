@@ -1,6 +1,7 @@
 package com.victorcottar.workshopmongodb.services;
 
 import com.victorcottar.workshopmongodb.domain.User;
+import com.victorcottar.workshopmongodb.dto.UserDTO;
 import com.victorcottar.workshopmongodb.repository.UserRepository;
 import com.victorcottar.workshopmongodb.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +25,16 @@ public class UserService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
+    public User insert(User obj) {
+        return repo.insert(obj);
+    }
+
+    public void delete(String id) {
+        findById(id);
+        repo.deleteById(id);
+    }
+
+    public User fromDTO(UserDTO objDtO) {
+        return new User(objDtO.getId(), objDtO.getName(), objDtO.getEmail());
+    }
 }
